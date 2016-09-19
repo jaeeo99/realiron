@@ -11,3 +11,6 @@
 
 ## Reference
 
+- [Awesome README](https://github.com/matiassingers/awesome-readme/blob/master/readme.md)
+- [setup vs requirements](https://caremad.io/posts/2013/07/setup-vs-requirement/)
+- [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/)
