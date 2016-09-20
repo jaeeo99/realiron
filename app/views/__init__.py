@@ -16,4 +16,4 @@ bcrypt = Bcrypt(app)
 
 @app.route("/")
 def index():
-    return 'hello world!'
+    return render_template('/pages/index.html')
