@@ -1,0 +1,58 @@
+@import url(http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+article{
+}
+section{
+  margin: 0 auto;
+}
+
+section.wrapper{
+  width : 1280px;
+}
+
+#intro_page {
+  position: relative;
+  height: 800px;
+  background: url(/static/img/background/bg_section_intro.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+#intro_page h1{
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  margin: 0 auto;
+  padding : 50px;
+  padding-top : 340px;
+  width : 400px;
+  height : 600px;
+  display: inline-block;
+  font-family: 'Jeju Gothic', serif;
+  background-color : #000;
+  color : #fff;
+  opacity : 0.7;
+  transform: translate(0, -50%);
+}
+#intro_page h1 span{
+  display: block;
+  text-align : right;
+}
+#intro_page h1 mark{
+  color : #f08080;
+  background : none;
+}
+
+#intro_page .description{
+  position: absolute;
+  font-family: 'Nanum Pen Script', serif;
+  right: 20%;
+  bottom: 20%;
+  color : #fff;
+}
