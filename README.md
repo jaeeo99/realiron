@@ -4,13 +4,21 @@
 
 ## Hompage
 
-- http://jaeeo.kr
+- [RealIron](http://jaeeo.kr) - RealIron 소개 페이지
+- [RealIron/Music](http://jaeeo.kr/music) - 유투브를 이용한 음악감상 페이지
 
-## Study
+## Todo
 
+RealIron/Music 
+- Cookie Player 리팩토링 (비회원 시)
+- Database 연결된 Player (Facebook Login 연결)
+- Playlist 여러개 연결 (타인의 리스트 감상)
+- Top 100 연결 (*.json형태?? Mongodb??)
 
 ## Reference
 
 - [Awesome README](https://github.com/matiassingers/awesome-readme/blob/master/readme.md)
 - [setup vs requirements](https://caremad.io/posts/2013/07/setup-vs-requirement/)
 - [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/)
+- [Image Resource](https://www.pexels.com/)
+- [Icon Resource](http://www.flaticon.com/)
