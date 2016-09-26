@@ -2,12 +2,12 @@ angular
   .module('RealIron')
   .controller('MusicCtrl', musicCtrl);
 
-musicCtrl.$inject = ['$scope', '$window', '$http', '$cookies', '$timeout'];
+musicCtrl.$inject = ['$scope', '$window', '$cookies', '$timeout', 'riSearch'];
 
 var SEARCH_URL = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=" + GOOGLE_API_KEY + "&q=";
 var DETAIL_SEARCH_URL = "api/search?query=";
 
-function musicCtrl($scope, $window, $http, $cookies, $timeout){
+function musicCtrl($scope, $window, $cookies, $timeout, riSearch){
     // init videos from $cookies
     var initVideos = function(videos){
         var video_length = $cookies.get('video_length');
@@ -35,71 +35,51 @@ function musicCtrl($scope, $window, $http, $cookies, $timeout){
             $window.alert("검색어를 입력해 주세요.");
             return false;
         }
-        $http.get(SEARCH_URL + query).
-            success(function(data, status, headers, config) {
-                var video = {
-                    title : data.items[0].snippet.title,
-                    videoId : data.items[0].id.videoId,
-                    thumb : data.items[0].snippet.thumbnails.default.url,
-                    edit : false,
-                    playing : false,
-                    other_videos : []
-                }
-                for (i = 1; i < data.items.length; i++) {
-                    video.other_videos.push({
-                        title : data.items[i].snippet.title,
-                        videoId : data.items[i].id.videoId,
-                        thumb : data.items[i].snippet.thumbnails.default.url
-                    });
-                }
-                $scope.videos.push(video);
-            }).
-            error(function(data, status, headers, config) {
-                $window.alert('동영상 등록에 실패하였습니다.');
-            });
-        $scope.query = null;
-    }
-
-    $scope.searchDetail = function(query){
-        if(isNull(query)){
-            $window.alert("검색어를 입력해 주세요.");
-            return false;
+        var success = function(data, status, headers, config){
+            var video = {
+                title : data.items[0].snippet.title,
+                videoId : data.items[0].id.videoId,
+                thumb : data.items[0].snippet.thumbnails.default.url,
+                edit : false,
+                playing : false,
+                other_videos : []
+            }
+            for (i = 1; i < data.items.length; i++) {
+                video.other_videos.push({
+                    title : data.items[i].snippet.title,
+                    videoId : data.items[i].id.videoId,
+                    thumb : data.items[i].snippet.thumbnails.default.url
+                });
+            }
+            $scope.videos.push(video);
         }
-        $http.get(DETAIL_SEARCH_URL + query).
-            success(function(data, status, headers, config) {
-                $scope.items = data;
-//                $scope.modalInstance = $modal.open({
-//                    templateUrl: 'searchResult.html',
-//                    controller: 'MusicModalController',
-//                    scope: $scope
-//                });
-            }).
-            error(function(data, status, headers, config) {
-                $window.alert('검색에 실패하였습니다.');
-            });
+        var error = function(data, status, headers, config){
+            $window.alert('동영상 등록에 실패하였습니다.');
+        }
+        riSearch.simpleSearch(query, success, error);
         $scope.query = null;
     }
 
     $scope.modifyVideo = function(video, query){
-        $http.get(SEARCH_URL + query).
-            success(function(data, status, headers, config) {
-                video.title = data.items[0].snippet.title;
-                video.videoId = data.items[0].id.videoId;
-                video.thumb = data.items[0].snippet.thumbnails.default.url;
-                video.edit = false;
-                video.playing = false;
-                video.other_videos = [];
-                for (i = 1; i < data.items.length; i++) {
-                    video.other_videos.push({
-                        title : data.items[i].snippet.title,
-                        videoId : data.items[i].id.videoId,
-                        thumb : data.items[i].snippet.thumbnails.default.url
-                    });
-                }
-            }).
-            error(function(data, status, headers, config) {
-                $window.alert('동영상 등록에 실패하였습니다.');
-            });
+        var success = function(data, status, headers, config){
+            video.title = data.items[0].snippet.title;
+            video.videoId = data.items[0].id.videoId;
+            video.thumb = data.items[0].snippet.thumbnails.default.url;
+            video.edit = false;
+            video.playing = false;
+            video.other_videos = [];
+            for (i = 1; i < data.items.length; i++) {
+                video.other_videos.push({
+                    title : data.items[i].snippet.title,
+                    videoId : data.items[i].id.videoId,
+                    thumb : data.items[i].snippet.thumbnails.default.url
+                });
+            }
+        }
+        var error = function(data, status, headers, config){
+            $window.alert('동영상 등록에 실패하였습니다.');
+        }
+        riSearch.simpleSearch(query, success, error);
     }
 
     $scope.toggleVideo = function(){

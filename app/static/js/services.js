@@ -1,6 +1,28 @@
 angular
-  .module('RealIron');
+  .module('RealIron')
+  .factory('riSearch', riSearch);
 
+function riSearch($http){
+    var SEARCH_URL = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=" + GOOGLE_API_KEY + "&q=";
+
+    function simpleSearch(query, success, fail){
+        $http.get(SEARCH_URL + query).
+            success(success).
+            error(fail);
+    }
+
+    return{
+      simpleSearch: simpleSearch
+    }
+}
+
+function riPlayer(){
+
+}
+
+function riPlaylist(){
+
+}
 
 // snippet code
 //  .factory("fileReader", fileReader);
