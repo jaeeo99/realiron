@@ -1,6 +1,8 @@
 angular
   .module('RealIron')
-  .factory('riSearch', riSearch);
+  .factory('riSearch', riSearch)
+  .factory('riPlayer', riPlayer)
+  .factory('riPlaylist', riPlaylist);
 
 function riSearch($http){
     var SEARCH_URL = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=" + GOOGLE_API_KEY + "&q=";
@@ -12,16 +14,97 @@ function riSearch($http){
     }
 
     return{
-      simpleSearch: simpleSearch
+        simpleSearch: simpleSearch
     }
 }
 
 function riPlayer(){
+    var player;
+    var onReady;
+    var onStateChange;
 
+    function init(videoDivId){
+        return function(){
+            player = new YT.Player(videoDivId, {
+                events: {
+                    'onReady': onReady,
+                    'onStateChange': onStateChange
+                }
+            });
+        }
+    }
+
+    function setOnReady(isReady){
+        //onReady = isReady;
+        onReady = play;
+        return onReady;
+    }
+
+    function setOnStateChange(isPlaying, isEnded){
+        onStateChange = function(event){
+            if(event.data == YT.PlayerState.PLAYING) {
+                //isPlaying();
+            }
+            else if(event.data == YT.PlayerState.ENDED){
+                play();
+                //isEnded();
+            }
+        }
+        return onStateChange;
+    }
+
+    function stopVideo(){
+        return function(){
+            stop();
+        }
+    }
+
+    function play(){
+        player.playVideo();
+    }
+
+    function pause(){
+        player.pauseVideo();
+    }
+
+    function stop(){
+        player.stopVideo();
+    }
+
+    return{
+        setOnReady: setOnReady,
+        setOnStateChange: setOnStateChange,
+        stopVideo: stopVideo,
+        init: init,
+        play: play,
+        pause: pause,
+        stop: stop,
+    }
 }
 
 function riPlaylist(){
+    var playlist;
+    var cur_index;
 
+    function init(){
+    }
+
+    function append(index){
+        playlist.append(video);
+    }
+
+    function edit(index, query){
+    }
+
+    function remove(index){
+    }
+
+    return{
+        init: init,
+        append: append,
+        edit: edit,
+        remove: remove
+    }
 }
 
 // snippet code

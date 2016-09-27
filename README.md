@@ -22,3 +22,4 @@ RealIron/Music
 - [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/)
 - [Image Resource](https://www.pexels.com/)
 - [Icon Resource](http://www.flaticon.com/)
+- [AngularJS Module화에 대하여](http://codingsmackdown.tv/blog/2013/04/19/angularjs-modules-for-great-justice/)

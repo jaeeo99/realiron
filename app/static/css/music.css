@@ -126,10 +126,6 @@ aside ul li{
     line-height : 25px;
 }
 
-#curr_video{
-    display : none;
-}
-
 .videos{
     width : 100%;
     height : 360px;

@@ -31,63 +31,9 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     추가할 노래를 검색해 주세요. <span class="addition">(가수 이름 + 노래 제목의 형식을 추천)</span>
                 </div>
-                <div ng-music-search callback="search(query)">
+                <div ng-music-search onkeyenter="search">
                 </div>
-                <div class="video-wrapper clear">
-                    <div class="play-controller clearfix">
-                        <div class="play-control">
-                            <button type="button" class="btn btn-default btn-xs" ng-click="changeVideoByController(-1)">
-                                <i class="fa fa-backward"></i>
-                            </button>
-                            <button type="button" class="btn btn-default btn-xs" ng-click="toggleVideo()">
-                                <i class="fa" ng-class="{'fa-pause' : videos[video_index].playing, 'fa-play' : !videos[video_index].playing}"></i>
-                            </button>
-                            <button type="button" class="btn btn-default btn-xs" ng-click="changeVideoByController(1)">
-                                <i class="fa fa-forward"></i>
-                            </button>
-                            {$ videos[video_index].title $}
-                        </div>
-                        <div class="list-control">
-                            <button type="button" class="btn btn-default btn-xs" ng-click="shuffleVideos(video_index)">
-                                <i class="fa fa-random"></i>
-                            </button>
-                            <button type="button" class="btn btn-default btn-xs" ng-click="openWithYoutube(videos[video_index].videoId)">
-                                <i class="fa fa-youtube-play"></i> youtube에서 보기
-                            </button>
-                        </div>
-                    </div>
-                    <div ng-show="videos.length != 0">
-                        <div id="curr_video"></div>
-                    </div>
-                    <div class="videos">
-                        <table class="table table-striped">
-                            <tbody>
-                            <tr ng-repeat="video in videos track by $index" ng-class="{'playing' : video.playing}">
-                                <td class="video" ng-click="changeVideo(video, true)" ng-if="!video.edit">{$ video.title $}</td>
-                                <td class="video-options" ng-if="!video.edit">
-                                    <i class="fa fa-edit" ng-click="video.edit = true" tooltip-placement="top" tooltip="수정"></i>
-                                    <i class="fa fa-times" ng-click="removeVideo($index)" tooltip-placement="top" tooltip="삭제"></i>
-                                </td>
-                                <td class="video" ng-if="video.edit">
-                                    <input type="search" search callback="modifyVideo(video, query)" class="form-control query" ng-model="video.query"/>
-                                </td>
-                                <td class="video-options" ng-if="video.edit">
-                                    <button type="button" class="btn btn-success btn-xs" ng-click="modifyVideo(video, video.query)">수정</button>
-                                    <button type="button" class="btn btn-default btn-xs" ng-click="video.edit = false">취소</button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="others alert alert-success clear" ng-if="videos[video_index].other_videos.length != 0">
-                    <div class="others-header">
-                        같이 검색된 노래
-                    </div>
-                    <div class="other" ng-repeat="other in videos[video_index].other_videos" ng-click="addOtherVideo(videos[video_index].other_videos, $index)">
-                        {$ other.title $}
-                    </div>
-                </div>
+                <div id="curr_video"></div>
             </section>
         </div>
     </article>
