@@ -20,8 +20,9 @@ function riSearch($http){
 
 function riPlayer(){
     var player;
-    var onReady;
-    var onStateChange;
+    var onReady = function(){};
+    var onStateChange = function(){};
+    var play_video;
 
     function init(videoDivId){
         return function(){
@@ -35,19 +36,14 @@ function riPlayer(){
     }
 
     function setOnReady(isReady){
-        //onReady = isReady;
-        onReady = play;
+        onReady = isReady;
         return onReady;
     }
 
-    function setOnStateChange(isPlaying, isEnded){
+    function setOnStateChange(isEnded){
         onStateChange = function(event){
-            if(event.data == YT.PlayerState.PLAYING) {
-                //isPlaying();
-            }
-            else if(event.data == YT.PlayerState.ENDED){
-                play();
-                //isEnded();
+            if(event.data == YT.PlayerState.ENDED){
+                isEnded();
             }
         }
         return onStateChange;
@@ -59,21 +55,36 @@ function riPlayer(){
         }
     }
 
-    function play(){
+    function play(video){
+        play_video = video;
+        play_video.playing = true;
+        player.loadVideoById(video.videoId, 0, 'large');
         player.playVideo();
     }
 
     function pause(){
+        play_video.playing = false;
         player.pauseVideo();
     }
 
     function stop(){
+        play_video.playing = false;
         player.stopVideo();
+    }
+
+    function getPlayer(){
+        return player;
+    }
+
+    function getPlayVideo(){
+        return play_video;
     }
 
     return{
         setOnReady: setOnReady,
         setOnStateChange: setOnStateChange,
+        getPlayer: getPlayer,
+        getPlayVideo: getPlayVideo,
         stopVideo: stopVideo,
         init: init,
         play: play,
@@ -85,25 +96,67 @@ function riPlayer(){
 function riPlaylist(){
     var playlist;
     var cur_index;
+    var repeat = false;
 
     function init(){
+        playlist = [];
+        cur_index = -1;
     }
 
-    function append(index){
-        playlist.append(video);
-    }
-
-    function edit(index, query){
+    function push(video){
+        playlist.push(video);
     }
 
     function remove(index){
+        playlist.splice(index, index + 1);
+    }
+
+    function setRepeat(isRepeat){
+        repeat = isRepeat;
+    }
+
+    function getPrev(){
+        if(playlist.length == 0){
+            cur_index = -1;
+            return null;
+        }
+        if(cur_index == -1){
+            cur_index = 0;
+        } else if(cur_index - 1 < 0){
+            cur_index = playlist.length - 1;
+        } else {
+            cur_index--;
+        }
+        return playlist[cur_index];
+    }
+
+    function getNext(){
+        if(playlist.length == 0){
+            cur_index = -1;
+            return null;
+        }
+        if(cur_index == -1){
+            cur_index = 0;
+        } else if(cur_index < playlist.length - 1){
+            cur_index++;
+        } else {
+            cur_index = 0;
+        }
+        return playlist[cur_index];
+    }
+
+    function getPlaylist(){
+        return playlist;
     }
 
     return{
         init: init,
-        append: append,
-        edit: edit,
-        remove: remove
+        push: push,
+        remove: remove,
+        setRepeat: setRepeat,
+        getNext: getNext,
+        getPrev: getPrev,
+        getPlaylist: getPlaylist
     }
 }
 

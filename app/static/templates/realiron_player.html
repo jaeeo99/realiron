@@ -1,0 +1,45 @@
+<div class="search input-group">
+    <label><i class="fa fa-search"></i></label>
+    <input type="search" ng-music-search onkeyenter="search(query)" class="form-control query" ng-model="query"/>
+    <div class="input-group-addon" ng-click="search(query)">검색</div>
+</div>
+
+<div class="videos">
+    <div id="{$videoId$}"></div>
+    <table class="table table-striped">
+        <tbody>
+        <tr>
+            <th>
+                <div class="play-controller clearfix">
+                    <div class="play-control">
+                        <button type="button" class="btn btn-default btn-xs" ng-click="prev()">
+                            <i class="fa fa-backward"></i>
+                        </button>
+                        <button type="button" class="btn btn-default btn-xs" ng-click="toggle()">
+                            <i class="fa" ng-class="{'fa-pause' : player.getPlayVideo().playing, 'fa-play' : !player.getPlayVideo().playing}"></i>
+                        </button>
+                        <button type="button" class="btn btn-default btn-xs" ng-click="next()">
+                            <i class="fa fa-forward"></i>
+                        </button>
+                        {$ player.getPlayVideo().title $}
+                    </div>
+                </div>
+            </th>
+        </tr>
+        <tr ng-repeat="video in playlist track by $index" ng-class="{'playing' : video.playing}">
+            <td class="video" ng-click="changeVideo(video, true)" ng-if="!video.edit">{$ video.title $}</td>
+            <td class="video-options" ng-if="!video.edit">
+                <i class="fa fa-edit" ng-click="video.edit = true" tooltip-placement="top" tooltip="수정"></i>
+                <i class="fa fa-times" ng-click="removeVideo($index)" tooltip-placement="top" tooltip="삭제"></i>
+            </td>
+            <td class="video" ng-if="video.edit">
+                <input type="search" search callback="modifyVideo(video, query)" class="form-control query" ng-model="video.query"/>
+            </td>
+            <td class="video-options" ng-if="video.edit">
+                <button type="button" class="btn btn-success btn-xs" ng-click="modifyVideo(video, video.query)">수정</button>
+                <button type="button" class="btn btn-default btn-xs" ng-click="video.edit = false">취소</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
