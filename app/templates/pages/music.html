@@ -1,0 +1,40 @@
+{% extends "layout/base.html" %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/music.css')}}" />
+{% endblock %}
+{% block js %}
+<script src="{{ url_for('static', filename='js/controllers/music.js') }}"></script>
+{% endblock %}
+{% block header %}
+<nav>
+
+</nav>
+{% endblock %}
+{% block body %}
+<main ng-controller="MusicCtrl">
+    <aside>
+        <div class="blur">
+        </div>
+        <ul class="nav">
+            <li><i class="fa fa-headphones" aria-hidden="true"></i> My Playlist</li>
+            <li><i class="fa fa-headphones" aria-hidden="true"></i> Others Playlist</li>
+            <li><i class="fa fa-headphones" aria-hidden="true"></i> Top 100</li>
+            <li><i class="fa fa-headphones" aria-hidden="true"></i> Artist</li>
+        </ul>
+    </aside>
+    <article>
+        <div class="blur">
+        </div>
+        <div class="wrapper">
+            <section>
+                <div class="alert alert-info alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    추가할 노래를 검색해 주세요. <span class="addition">(가수 이름 + 노래 제목의 형식을 추천)</span>
+                </div>
+                <div realiron-player video-id="videoId"></div>
+            </section>
+        </div>
+    </article>
+</main>
+
+{% endblock %}

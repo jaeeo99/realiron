@@ -17,3 +17,7 @@ bcrypt = Bcrypt(app)
 @app.route("/")
 def index():
     return render_template('/pages/index.html')
+
+@app.route("/music")
+def music():
+    return render_template('/pages/music.html')

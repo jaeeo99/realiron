@@ -1,0 +1,220 @@
+html, body, .global-wrap{
+  height : 100%;
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+  position : fixed;
+  width : 100%;
+  height : 55px;
+  border-bottom : 1px solid #696969;
+  box-shadow: 5px 2px 10px #696969;
+  background-color : #fff;
+  z-index : 5;
+}
+
+main{
+  position : relative;
+  padding-top : 55px;
+  height : 100%;
+  background: url(/static/img/background/bg_music_listen.jpg) center;
+}
+
+main article{
+  position : relative;
+  margin-left : 300px;
+  width : calc(100% - 300px);
+  min-height : 100%;
+}
+
+main .blur{
+  position : absolute;
+  width: 100%;
+  height: 100%;
+  background: #3a3a3a;
+  opacity: 0.2;
+}
+main .wrapper{
+  position : absolute;
+  width : 100%;
+  height : 100%;
+  overflow : auto;
+}
+
+main article section{
+  margin : 20px;
+  padding : 20px;
+  color : #000;
+  background : #fff;
+}
+
+aside {
+  position : relative;
+  float: left;
+  width: 300px;
+  height: 100%;
+}
+
+aside .blur{
+  position : absolute;
+  width : 100%;
+  height : 100%;
+  background: #000;
+  opacity: 0.4;
+}
+
+aside ul {
+  position : absolute;
+  display: block;
+  list-style-type: disc;
+  color : #fff;
+  padding-top : 40px;
+}
+aside ul li{
+  font-family: 'Nanum Pen Script', serif;
+  margin : 30px;
+  font-size : 30px;
+  opacity : 0.9;
+}
+
+
+
+
+
+#container .wrapper{
+    margin : 30px auto;
+}
+.search{
+    position : relative;
+    height : 30px;
+}
+
+.search label{
+    position : absolute;
+    top : 6px;
+    left : 10px;
+    z-index: 3;
+}
+
+.search input{
+    padding-left : 30px;
+    position : absolute;
+    border : 1px solid #333333;
+    width : 90%;
+}
+
+.search button{
+    float : right ;
+}
+
+.search .input-group-addon{
+    cursor : pointer;
+}
+
+.search .input-group-addon:hover{
+    background-color : #dddddd;
+}
+
+.video-wrapper{
+    margin : 30px auto;
+}
+
+.alert.bg-info {
+    margin-bottom : 20px;
+    padding : 10px 20px;
+    line-height : 25px;
+}
+
+.videos{
+    width : 100%;
+    height : 360px;
+}
+
+.others-header{
+    margin-bottom : 10px;
+}
+
+.other{
+    cursor : pointer;
+}
+
+.video{
+    cursor : pointer;
+}
+
+.video input{
+    height : 20px;
+}
+
+.play-controller{
+    margin-top : 10px;
+    margin-bottom : 5px;
+}
+
+.videos iframe{
+    float : left;
+}
+
+.playlist{
+    overflow: scroll;
+    max-height : 360px;
+    width : calc(100% - 640px);
+}
+
+.play-control{
+    float : left;
+}
+
+.list-control{
+    float : right;
+}
+
+.playing td{
+    background-color : #fcf8e3 !important;
+}
+
+.video-options{
+    text-align : right;
+}
+
+.modal-body table{
+    margin : 0;
+}
+
+.search_result{
+    cursor : pointer;
+}
+
+.search_result:hover{
+    background-color : #fcf8e3 !important;
+}
+
+.pagination{
+    margin : 0 auto;
+    float : left;
+}
+
+@media screen and (max-width: 940px){
+    .play-controller{
+        display : none;
+    }
+    #container .wrapper{
+        margin : 15px auto;
+    }
+    .alert span.addition{
+        display : none;
+    }
+    .video-wrapper{
+        margin : 20px auto;
+    }
+    .videos{
+        height : auto;
+        overflow : none;
+    }
+    #curr_video{
+        width : 100%;
+        height : 200px;
+        display : block;
+    }
+}

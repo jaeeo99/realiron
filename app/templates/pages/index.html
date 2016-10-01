@@ -1,10 +1,27 @@
 {% extends "layout/base.html" %}
 {% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css')}}" />
 {% endblock %}
 {% block js %}
 {% endblock %}
 {% block body %}
-<div>
-
-</div>
+<main>
+    <article>
+        <section id="intro_page">
+            <h1><span><mark>개발자</mark>와</span><span>함께</span><span><mark>성장</mark>해</span><span>나가는</span><span><mark>공간</mark>입니다</span></h1>
+            <h2 class="description">Jaeeo's Personal Page - "Realiron"</h2>
+        </section>
+    </article>
+</main>
+{% endblock %}
+{% block footer %}
+<footer>
+    <img class="profile_img" src="/static/img/profile_jaeeo.jpg" />
+    <h5>Jaeeo</h5>
+    <h6>"Developer Makes Value"</h6>
+    <div class="profile_link">
+        <a href="https://github.com/jaeeo99" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+        <a href="https://www.facebook.com/jinchul.park.71" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+    </div>
+</footer>
 {% endblock %}
