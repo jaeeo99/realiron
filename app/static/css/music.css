@@ -129,7 +129,6 @@ aside ul li{
 .videos{
     width : 100%;
     height : 360px;
-    overflow: scroll;
 }
 
 .others-header{
@@ -149,7 +148,18 @@ aside ul li{
 }
 
 .play-controller{
+    margin-top : 10px;
     margin-bottom : 5px;
+}
+
+.videos iframe{
+    float : left;
+}
+
+.playlist{
+    overflow: scroll;
+    max-height : 360px;
+    width : calc(100% - 640px);
 }
 
 .play-control{

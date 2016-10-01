@@ -43,31 +43,35 @@ function riPlayer(){
     function setOnStateChange(isEnded){
         onStateChange = function(event){
             if(event.data == YT.PlayerState.ENDED){
+                play_video.playing = false;
                 isEnded();
             }
         }
         return onStateChange;
     }
 
-    function stopVideo(){
-        return function(){
-            stop();
-        }
+    function setPlayVideo(video){
+        play_video = video;
+        player.loadVideoById(video.videoId, 0, 'large');
     }
 
-    function play(video){
-        play_video = video;
+    function play(){
         play_video.playing = true;
-        player.loadVideoById(video.videoId, 0, 'large');
         player.playVideo();
     }
 
     function pause(){
+        if(isNull(play_video)){
+            return;
+        }
         play_video.playing = false;
         player.pauseVideo();
     }
 
     function stop(){
+        if(isNull(play_video)){
+            return;
+        }
         play_video.playing = false;
         player.stopVideo();
     }
@@ -83,9 +87,9 @@ function riPlayer(){
     return{
         setOnReady: setOnReady,
         setOnStateChange: setOnStateChange,
+        setPlayVideo: setPlayVideo,
         getPlayer: getPlayer,
         getPlayVideo: getPlayVideo,
-        stopVideo: stopVideo,
         init: init,
         play: play,
         pause: pause,
@@ -111,8 +115,16 @@ function riPlaylist(){
         playlist.splice(index, index + 1);
     }
 
-    function setRepeat(isRepeat){
-        repeat = isRepeat;
+    function repeatToggle(){
+        repeat = !repeat;
+    }
+
+    function setIndex(index){
+        cur_index = index;
+    }
+
+    function isRepeat(){
+        return repeat;
     }
 
     function getPrev(){
@@ -145,18 +157,25 @@ function riPlaylist(){
         return playlist[cur_index];
     }
 
+    function getIndex(){
+        return cur_index;
+    }
+
     function getPlaylist(){
         return playlist;
     }
 
     return{
+        setIndex: setIndex,
+        repeatToggle: repeatToggle,
+        getNext: getNext,
+        getPrev: getPrev,
+        getPlaylist: getPlaylist,
+        getIndex: getIndex,
+        isRepeat: isRepeat,
         init: init,
         push: push,
         remove: remove,
-        setRepeat: setRepeat,
-        getNext: getNext,
-        getPrev: getPrev,
-        getPlaylist: getPlaylist
     }
 }
 

@@ -30,11 +30,54 @@ function realironPlayer($window, riSearch, riPlayer, riPlaylist){
         scope.riPlaylist = riPlaylist;
         scope.riPlayer = riPlayer;
 
+        scope.riPlayer.setOnStateChange(function(){
+            scope.riPlayer.stop();
+            if(scope.riPlaylist.isRepeat()){
+                scope.riPlayer.setPlayVideo(scope.riPlayer.getPlayVideo());
+                scope.riPlayer.play();
+                return;
+            }
+            scope.riPlayer.setPlayVideo(scope.riPlaylist.getNext());
+            scope.riPlayer.play();
+        });
+
         $window.onYouTubeIframeAPIReady = scope.riPlayer.init(scope.videoId);
         scope.riPlaylist.init();
 
         scope.playlist = scope.riPlaylist.getPlaylist();
-        scope.player = scope.riPlayer.getPlayer();
+        scope.player = scope.riPlayer.getPlayVideo();
+
+        scope.prev = function(){
+            scope.changeVideo(scope.riPlaylist.getPrev());
+        }
+
+        scope.next = function(){
+            scope.changeVideo(scope.riPlaylist.getNext());
+        }
+
+        scope.changeVideo = function(video){
+            scope.riPlayer.stop();
+            scope.riPlayer.setPlayVideo(video);
+            scope.player = scope.riPlayer.getPlayVideo();
+            scope.riPlayer.play();
+        }
+
+        scope.setIndex = function(index){
+            scope.riPlaylist.setIndex(index);
+        }
+
+        scope.toggle = function(){
+            if(isNull(scope.player)){
+                scope.next();
+                return;
+            }
+            if(scope.player.playing){
+                scope.riPlayer.pause();
+            }
+            else{
+                scope.riPlayer.play();
+            }
+        }
 
         scope.search = function(query) {
             if(isNull(query)){
@@ -57,8 +100,10 @@ function realironPlayer($window, riSearch, riPlayer, riPlaylist){
                         thumb : data.items[i].snippet.thumbnails.default.url
                     });
                 }
-                scope.playlist.push(video);
-                scope.riPlayer.play(video);
+                scope.riPlaylist.push(video);
+                if(scope.riPlaylist.getIndex() == -1){
+                    scope.next();
+                }
             }
             var error = function(data, status, headers, config){
                 $window.alert('동영상 등록에 실패하였습니다.');
