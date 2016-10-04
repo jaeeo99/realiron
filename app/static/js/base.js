@@ -24,6 +24,33 @@ function config($httpProvider, $interpolateProvider){
 //  delete $httpProvider.defaults.headers.common["X-Requested-With"];
 }
 
+angular
+  .module('RealIron')
+  .run(run);
+
+run.$inject = ['$rootScope', '$window', 'srvAuth'];
+function run($rootScope, $window, srvAuth){
+
+  $rootScope.user = {};
+
+  $window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1135258123221413',
+      xfbml      : true,
+      version    : 'v2.7'
+    });
+    srvAuth.watchLoginChange();
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/ko_KR/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+}
+
 var GOOGLE_API_KEY = "AIzaSyCH8SzDt8nCXEg_rWl2KkLNK3gKRJ21C8w";
 
 function validateEmail($email) {

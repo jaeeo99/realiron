@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from app import app, db
-from app.models import *
+from app import app
+import app.models
 from flask import g, render_template, jsonify, abort, request, make_response, url_for, redirect
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from flask_bcrypt import Bcrypt

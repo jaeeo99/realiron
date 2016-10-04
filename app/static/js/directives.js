@@ -66,6 +66,12 @@ function realironPlayer($window, riSearch, riPlayer, riPlaylist){
             scope.riPlaylist.setIndex(index);
         }
 
+        scope.sortableOptions = {
+            update: function(e, ui) {
+                scope.riPlaylist.resetIndex();
+            },
+        }
+
         scope.toggle = function(){
             if(isNull(scope.player)){
                 scope.next();

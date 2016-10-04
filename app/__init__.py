@@ -1,10 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import sys
-from app import assets
-import settings
 from flask import Flask
 from flask_assets import Environment
+
+import sys
+import assets
+import settings
 
 from flask.json import JSONEncoder as BaseEncoder
 from speaklater import _LazyString
@@ -23,14 +24,13 @@ app.config.from_object(settings.Config)
 app.config.from_object(settings.LocalConfig)
 app.json_encoder = JSONEncoder
 
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+from app.database import db_session
 
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+@app.teardown_request
+def shutdown_session(exception=None):
+    db_session.remove()
 
-
-from app import views
+# from app import views
 
 assets_env = Environment(app)
 assets_env.url = app.static_url_path

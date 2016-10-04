@@ -25,9 +25,9 @@
     <div id="{$videoId$}"></div>
     <div class="playlist">
         <table class="table table-striped">
-            <tbody>
+            <tbody ui-sortable="sortableOptions" ng-model="playlist">
             <tr ng-repeat="video in playlist track by $index" ng-class="{'playing' : video.playing}">
-                <td class="video" ng-click="changeVideo(video); setIndex($index)" ng-if="!video.edit">{$ video.title $}</td>
+                <td class="video" ng-click="changeVideo(video)" ng-if="!video.edit">{$ video.title $}</td>
                 <td class="video-options" ng-if="!video.edit">
                     <!--<i class="fa fa-edit" ng-click="video.edit = true" tooltip-placement="top" tooltip="수정"></i>-->
                     <i class="fa fa-times" ng-click="riPlaylist.remove($index)" tooltip-placement="top" tooltip="삭제"></i>

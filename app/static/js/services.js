@@ -2,7 +2,8 @@ angular
   .module('RealIron')
   .factory('riSearch', riSearch)
   .factory('riPlayer', riPlayer)
-  .factory('riPlaylist', riPlaylist);
+  .factory('riPlaylist', riPlaylist)
+  .factory('srvAuth', srvAuth);
 
 function riSearch($http){
     var SEARCH_URL = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=" + GOOGLE_API_KEY + "&q=";
@@ -18,7 +19,7 @@ function riSearch($http){
     }
 }
 
-function riPlayer(){
+function riPlayer($window){
     var player;
     var onReady = function(){};
     var onStateChange = function(){};
@@ -51,11 +52,18 @@ function riPlayer(){
     }
 
     function setPlayVideo(video){
+        if(isNull(video)){
+            $window.alert('유효한 영상이 아닙니다.');
+            return;
+        }
         play_video = video;
         player.loadVideoById(video.videoId, 0, 'large');
     }
 
     function play(){
+        if(isNull(play_video)){
+            return;
+        }
         play_video.playing = true;
         player.playVideo();
     }
@@ -112,15 +120,21 @@ function riPlaylist(){
     }
 
     function remove(index){
-        playlist.splice(index, index + 1);
+        playlist.splice(index, 1);
     }
 
     function repeatToggle(){
         repeat = !repeat;
     }
 
-    function setIndex(index){
-        cur_index = index;
+    function resetIndex(){
+        for(var i = 0 ; i < playlist.length ; i++){
+            if(playlist[i].playing){
+                cur_index = i;
+                return;
+            }
+        }
+        cur_index = -1;
     }
 
     function isRepeat(){
@@ -128,6 +142,7 @@ function riPlaylist(){
     }
 
     function getPrev(){
+        resetIndex();
         if(playlist.length == 0){
             cur_index = -1;
             return null;
@@ -143,6 +158,7 @@ function riPlaylist(){
     }
 
     function getNext(){
+        resetIndex();
         if(playlist.length == 0){
             cur_index = -1;
             return null;
@@ -166,7 +182,7 @@ function riPlaylist(){
     }
 
     return{
-        setIndex: setIndex,
+        resetIndex: resetIndex,
         repeatToggle: repeatToggle,
         getNext: getNext,
         getPrev: getPrev,
@@ -177,6 +193,45 @@ function riPlaylist(){
         push: push,
         remove: remove,
     }
+}
+
+function srvAuth($rootScope){
+    var srvAuth = {};
+
+    srvAuth.fblogin = function() {
+      FB.login(function (response) {
+        if (response.status === 'connected') {
+          // You can now do what you want with the data fb gave you.
+          console.info(response);
+        }
+      });
+    }
+
+    srvAuth.logout = function() {
+      var _self = this;
+      FB.logout(function(response) {
+        $rootScope.$apply(function() {
+          $rootScope.user = _self.user = {};
+        });
+      });
+    }
+
+    srvAuth.watchLoginChange = function() {
+      var _self = this;
+      FB.Event.subscribe('auth.authResponseChange', function(res) {
+        if (res.status === 'connected') {
+          FB.api('/me', function(res) {
+            $rootScope.$apply(function() {
+              $rootScope.user = _self.user = res;
+              console.info($rootScope.user);
+            });
+          });
+        } else {
+          alert('Not Connected');
+        }
+      });
+    }
+    return srvAuth;
 }
 
 // snippet code

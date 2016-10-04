@@ -49,3 +49,20 @@ footer .profile_link{
 footer .profile_link a{
   color: #fff;
 }
+
+nav .navigation{
+  font-family : 'Nanum Pen Script', serif;
+  font-weight : 900;
+  margin : 0 20px;
+  line-height : 55px;
+  font-size : 24px;
+}
+nav .navigation a{
+  padding : 0 30px;
+  color : #000;
+}
+
+nav .navigation a img{
+  transform : translate(0, -3px);
+  padding-right : 10px;
+}
