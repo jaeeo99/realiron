@@ -1,7 +1,7 @@
 {% extends "layout/base.html" %}
 {% block title %}<title>RIPlayer</title>{% endblock %}
 {% block favicon %}
-<link rel="shortcut icon" type="image/png" href="/static/img/icon/riplayer.ico"/>
+<link rel="shortcut icon" type="image/png" href="{{url_for('static', filename='img/icon/riplayer.ico')}}"/>
 {% endblock %}
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/music.css')}}" />
@@ -14,7 +14,7 @@
     <div class="navigation">
         <a href="{{url_for('index')}}">Realiron</a>
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
-        <a href="{{url_for('music')}}"><img src="/static/img/ic_riplayer.png" />RIPlayer</a>
+        <a href="{{url_for('music')}}"><img src="{{url_for('static', filename='img/ic_riplayer.png')}}" />RIPlayer</a>
         <div class="fb-like" data-share="true"></div>
         <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false"></div>
     </div>

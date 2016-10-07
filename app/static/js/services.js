@@ -44,7 +44,6 @@ function riPlayer($window){
     function setOnStateChange(isEnded){
         onStateChange = function(event){
             if(event.data == YT.PlayerState.ENDED){
-                play_video.playing = false;
                 isEnded();
             }
         }
@@ -195,7 +194,7 @@ function riPlaylist(){
     }
 }
 
-function srvAuth($rootScope){
+function srvAuth($rootScope, $http){
     var srvAuth = {};
 
     srvAuth.fblogin = function() {
@@ -220,10 +219,23 @@ function srvAuth($rootScope){
       var _self = this;
       FB.Event.subscribe('auth.authResponseChange', function(res) {
         if (res.status === 'connected') {
+          console.log(res);
           FB.api('/me', function(res) {
             $rootScope.$apply(function() {
               $rootScope.user = _self.user = res;
-              console.info($rootScope.user);
+              $http({
+                method: 'POST',
+                url: '/api/login/fb',
+                data: {
+                  'fb_id': res.id,
+                  'name': res.name,
+                },
+                headers: {'Content-Type': 'application/json'}
+              }).success(function(response){
+                console.log(response)
+              }).error(function(response){
+                console.log(response)
+              });
             });
           });
         } else {

@@ -10,7 +10,7 @@
             <i class="fa fa-backward"></i>
         </button>
         <button type="button" class="btn btn-default btn-xs" ng-click="toggle()">
-            <i class="fa" ng-class="{'fa-pause' : player.playing, 'fa-play' : !player.playing}" aria-hidden="true"></i>
+            <i class="fa" ng-class="{'fa-pause' : riPlayer.getPlayVideo().playing, 'fa-play' : !riPlayer.getPlayVideo().playing}" aria-hidden="true"></i>
         </button>
         <button type="button" class="btn btn-default btn-xs" ng-click="next()">
             <i class="fa fa-forward" aria-hidden="true"></i>
@@ -18,7 +18,7 @@
         <button type="button" class="btn btn-default btn-xs" ng-class="{'active' : riPlaylist.isRepeat()}" ng-click="riPlaylist.repeatToggle()">
             <i class="fa fa-repeat" aria-hidden="true"></i>
         </button>
-        {$ player.title $}
+        {$ riPlayer.getPlayVideo().title $}
     </div>
 </div>
 <div class="videos">

@@ -45,7 +45,6 @@ function realironPlayer($window, riSearch, riPlayer, riPlaylist){
         scope.riPlaylist.init();
 
         scope.playlist = scope.riPlaylist.getPlaylist();
-        scope.player = scope.riPlayer.getPlayVideo();
 
         scope.prev = function(){
             scope.changeVideo(scope.riPlaylist.getPrev());
@@ -58,12 +57,7 @@ function realironPlayer($window, riSearch, riPlayer, riPlaylist){
         scope.changeVideo = function(video){
             scope.riPlayer.stop();
             scope.riPlayer.setPlayVideo(video);
-            scope.player = scope.riPlayer.getPlayVideo();
             scope.riPlayer.play();
-        }
-
-        scope.setIndex = function(index){
-            scope.riPlaylist.setIndex(index);
         }
 
         scope.sortableOptions = {
@@ -73,11 +67,11 @@ function realironPlayer($window, riSearch, riPlayer, riPlaylist){
         }
 
         scope.toggle = function(){
-            if(isNull(scope.player)){
+            if(isNull(scope.riPlayer.getPlayVideo())){
                 scope.next();
                 return;
             }
-            if(scope.player.playing){
+            if(scope.riPlayer.getPlayVideo().playing){
                 scope.riPlayer.pause();
             }
             else{

@@ -1,0 +1,21 @@
+{% extends "layout/base.html" %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/test.css')}}" />
+{% endblock %}
+{% block js %}
+<script src="{{ url_for('static', filename='js/controllers/test.js') }}"></script>
+{% endblock %}
+{% block body %}
+<main ng-controller="TestCtrl">
+    <div class="slot" ng-repeat="chicken in chicken_list" ng-click="increase(chicken)">
+        <div class="slot-header" ng-class="{fire: chicken.value > 15}">
+            <img ng-src="{$trustSrc(chicken.src)$}" />
+        </div>
+        <div class="slot-footer">
+            <div ng-class="{level1: chicken.value > 5 && chicken.value <= 10, level2: chicken.value > 10 && chicken.value <= 15, level3: chicken.value > 15}">{$chicken.name$} {$chicken.value$}</div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+{% block footer %}
+{% endblock %}
